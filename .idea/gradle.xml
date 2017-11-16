@@ -10,6 +10,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/blueTooth" />
             <option value="$PROJECT_DIR$/blueToothUse" />
+            <option value="$PROJECT_DIR$/mybluetooth2" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

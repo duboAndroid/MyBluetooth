@@ -2,6 +2,7 @@ package com.example.dubo.test1;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothGatt;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -21,7 +22,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
     private ListView listView;
@@ -30,12 +31,17 @@ public class MainActivity extends AppCompatActivity {
     private List<BluetoothDevice> list = new ArrayList<>();
     private MyReceiver myReceiver;
     private ListViewAdapter adapter;
+    private BluetoothGatt mBluetoothGattOne;
+    public final static UUID UUID_SERVICE = UUID.fromString("0003cdd0-0000-1000-8000-00805f9b0131");//蓝牙设备的Service的UUID
+    public final static UUID UUID_NOTIFY = UUID.fromString("0003cdd1-0000-1000-8000-00805f9b0131");  //蓝牙设备的notify的UUID
+    private TextView test_show;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button search = (Button) findViewById(R.id.search);
+        test_show = (TextView) findViewById(R.id.test_show);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         listView = (ListView) findViewById(R.id.list_view);
+
         //获取蓝牙适配器对象
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         //首先,如果要操作蓝牙,先判断当前的手机手否存在蓝牙
@@ -55,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
                 //bluetoothAdapter.disable();//不可用,关闭
             }
         }
+
+
         myReceiver = new MyReceiver();
         //动态注册一个广播接收者
         IntentFilter filter = new IntentFilter();

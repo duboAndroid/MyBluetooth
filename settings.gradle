@@ -1,1 +1,1 @@
-include ':blueTooth', ':blueToothUse'
+include ':blueTooth', ':blueToothUse', ':mybluetooth2'
